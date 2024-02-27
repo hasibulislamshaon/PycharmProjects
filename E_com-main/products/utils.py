@@ -57,10 +57,12 @@ def guestOrder(request,data):
       print('COOKIES:', request.COOKIES)
       name= data['form']['name']
       email = data['form']['email']
+      phone= data['form']['phoneNumber']
       cookieData= cookieCart(request)
       items=cookieData['items']
       customer,created = Customer.objects.get_or_create(
             email=email,
+            phone=phone,
         )
       customer.name = name
       customer.save()

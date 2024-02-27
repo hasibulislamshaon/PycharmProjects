@@ -1,19 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from .models import *
 import json
 import datetime
 from . utils import cookieCart,cartData,guestOrder
-from django.contrib.auth.forms import UserCreationForm
-from .form import CreateUserForm
-from django.contrib.auth  import authenticate,login,logout 
-from django.contrib import messages
-import stripe
+
 # Create your views here.
-
-stripe.api_key = 'sk_test_51NEzSiFDYydnnbweNQ7Zxtt0IScFIdxJc4nUyrU5cUgkI4XwJIvpc7BFxrEgl8QafrfzNnXcuhPF3UgFErFfjabo004X2vZ70O'
-
-
 def store(request):
 
     Data = cartData(request)
@@ -46,12 +38,6 @@ def cheakout(request):
 
     context={'items':items,'order':order, 'cartItems':cartItems}
     return render(request,"cheakout.html",context)
-
-
-
-
-
-
 
 def updateItem(request):
     data = json.loads(request.body)
@@ -106,9 +92,9 @@ def processOrder(request):
     
     return JsonResponse('Payment Complete', safe=False)
 
-def view(request):
-    products = Product.objects.all()
-    context={'products':products}
+def view(request, productName):
+    product = get_object_or_404(Product, name=productName)
+    context={'product':product}
     return render(request,"view.html",context)
 """"
 def registerPage(request):
