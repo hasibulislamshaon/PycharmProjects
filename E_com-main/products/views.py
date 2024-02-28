@@ -92,41 +92,9 @@ def processOrder(request):
     
     return JsonResponse('Payment Complete', safe=False)
 
-def view(request, productName):
-    product = get_object_or_404(Product, name=productName)
+def view(request, productId):
+    product = get_object_or_404(Product, name=productId)
     context={'product':product}
     return render(request,"view.html",context)
-""""
-def registerPage(request):
-    form=CreateUserForm()
 
-
-    if request.method == 'POST':
-       form= CreateUserForm(request.POST)
-       if form.is_valid():
-           form.save()
-           user = form.cleaned_data.get('username')
-           messages.success(request, 'User is created as ' + user)
-           return redirect('login')
- 
-    context ={'form':form}
-    return render(request,'register.html',context)
-def loginPage(request):
-    if request.method == 'POST':
-        username=request.POST.get('username')
-        password=request.POST.get('password')
-
-        user = authenticate(request,username=username, password=password)
-        if user is not None:
-            login(request,user)
-            return redirect('store')
-        else: 
-            messages.info(request,'Username or password is incorrect')
-            return redirect('login')
-    context ={}
-    return render ( request,'login.html',context)
-
-def logoutpage(request):
-    logout(request)
-    return redirect('store')"""
 
